@@ -37,32 +37,46 @@
 
   <body>
     <h2>monitoring/monitoring</h2>
-    <script type='text/javascript' src='https://rtm.peruri.co.id/javascripts/api/viz_v1.js'></script>
-    <div class='tableauPlaceholder' style='width: 1300px; height: 1327px;'>
-    <object class='tableauViz' width='1300' height='1327' style='display:none;'>
-    <param name='host_url' value='https%3A%2F%2Frtm.peruri.co.id%2F' /> 
-    <param name='embed_code_version' value='3' /> 
-    <param name='site_root' value='' />
-    <param name='name' value='PipelineManagementv2_2&#47;PipelineManagement' />
-    <param name='tabs' value='no' />
-    <param name='toolbar' value='yes' />
-    <param name='showAppBanner' value='false' />
-    <param name='filter' value='iframeSizedToWindow=true' />
-    </object>
-    </div>
+      <?php 
+      $url = 'https://rtm.peruri.co.id/trusted/';
+      $view = "CustomerReportNew/CustpmerReportNEW";
+      $username = "bayu";
+      $password = "ijnijn1q2w3e";
 
-    <script type='text/javascript' src='https://rtm.peruri.co.id/javascripts/api/viz_v1.js'></script>
-    <div class='tableauPlaceholder' style='width: 1100px; height: 727px;'>
-    <object class='tableauViz' width='1100' height='727' style='display:none;'>
-    <param name='host_url' value='https%3A%2F%2Frtm.peruri.co.id%2F' /> 
-    <param name='embed_code_version' value='3' /> 
-    <param name='site_root' value='' />
-    <param name='name' value='PipelineManagementv2_2D&#47;PipelineManagement&#47;bayu&#47;DashboardDewas' />
-    <param name='tabs' value='no' />
-    <param name='toolbar' value='yes' />
-    <param name='showAppBanner' value='false' />
-    <param name='filter' value='iframeSizedToWindow=true' />
-    </object>
-    </div>
+      $params = array(
+          "username" => $username,
+          "password" => $password,
+      );
+      $options = array(
+          CURLOPT_URL             => $url,
+          CURLOPT_RETURNTRANSFER  => true,    // return web page as var
+          CURLOPT_CONNECTTIMEOUT  => 10,      // timeout on connect
+          CURLOPT_TIMEOUT         => 10,      // timeout on response
+          CURLOPT_IPRESOLVE       => CURL_IPRESOLVE_V4,
+          CURLOPT_POSTFIELDS      => $params
+      );
+      $curl_connection = curl_init();
+      curl_setopt_array( $curl_connection, $options );
+      $ticket = curl_exec($curl_connection);
+      curl_close($curl_connection);
+      ?>
+
+      <script src="https://rtm.peruri.co.id/javascripts/api/tableau-2.min.js"></script>
+      <div id="vizContainer"></div>
+      <script type="text/javascript">
+          function initViz() {
+              var containerDiv = document.getElementById("vizContainer"),
+              url = "<?php echo $url , $ticket, '/views/', $view;?>";
+              options = {
+                  hideTabs: true,
+                  hideToolbar: true,
+                  width: "100%",
+                  height: "1024px"
+              };
+              var viz = new tableau.Viz(containerDiv, url, options); 
+          }
+          initViz();
+      </script> 
+
   </body>
 </html>
