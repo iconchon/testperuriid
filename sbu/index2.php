@@ -58,6 +58,7 @@
       $curl_connection = curl_init();
       curl_setopt_array( $curl_connection, $options );
       $ticket = curl_exec($curl_connection);
+      echo $ticket, '   ddddd';
       curl_close($curl_connection);
       ?>
 
